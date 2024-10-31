@@ -166,13 +166,13 @@ exports.findWallPage = (page, pageSize, type, label) => {
     let sql;
     const params = [type, (page - 1) * pageSize, pageSize];
     if (label === -1) {
-        sql = `select *
+        sql = `select id, type, message, name, user_id as userId, moment, label, color, image_url as imageUrl
                from comment_wall.walls
                where type = ?
                order by id desc
                limit ?, ?;`;
     } else {
-        sql = `select *
+        sql = `select id, type, message, name, user_id as userId, moment, label, color, image_url as imageUrl
                from comment_wall.walls
                where type = ?
                  and label = ?
@@ -185,7 +185,7 @@ exports.findWallPage = (page, pageSize, type, label) => {
 
 // 倒序分页查询评论
 exports.findCommentPage = (page, pageSize, wallId) => {
-    const sql = `select *
+    const sql = `select id, wall_id as wallId, user_id as userId, image_url as imageUrl, comment, name, moment
                  from comment_wall.comments
                  where wall_id = ?
                  order by id desc
