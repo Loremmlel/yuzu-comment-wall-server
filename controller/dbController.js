@@ -21,7 +21,7 @@ exports.insertWall = async (req, res) => {
 
 exports.insertFeedback = async (req, res) => {
     const data = req.body
-    await db.insertFeedback([
+    await db.insertFeedBack([
         data.wallId,
         data.userId,
         data.type,
@@ -95,13 +95,13 @@ exports.findWallPage = async (req, res) => {
     await db.findWallPage(data.page, data.pageSize, data.type, data.label)
         .then (async result => {
             for (let i = 0; i < result.length; i++) {
-                result[i].thumb = await db.feedbackCount(result[i].id, 0)
-                result[i].report = await db.feedbackCount(result[i].id, 1)
-                result[i].revoke = await db.feedbackCount(result[i].id, 2)
+                result[i].thumb = (await db.feedbackCount(result[i].id, 0))[0].count
+                result[i].report = (await db.feedbackCount(result[i].id, 1))[0].count
+                result[i].revoke = (await db.feedbackCount(result[i].id, 2))[0].count
                 // 是否点赞
-                result[i].isThumb = await db.thumbCount(result[i].id, data.userId)
+                result[i].isThumb = (await db.thumbCount(result[i].id, data.userId))[0].count
                 // 评论数
-                result[i].commentCount = await db.commentCount(result[i].id)
+                result[i].commentCount = (await db.commentCount(result[i].id))[0].count
             }
             res.send({
                 code: 200,

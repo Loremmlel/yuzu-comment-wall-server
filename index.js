@@ -31,6 +31,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 require("./routes/index")(app)
+require("./routes/files")(app)
 
 app.listen(config.port, () => {
     console.log(`启动端口${config.port}`)

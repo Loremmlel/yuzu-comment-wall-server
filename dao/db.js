@@ -95,9 +95,9 @@ const createTable = (sql) => {
 
 async function create() {
     await createCommentWall(createCommentWallSql)
-    createTable(createTableWallsSql)
-    createTable(createTableFeedbacksSql)
-    createTable(createTableCommentsSql)
+    await createTable(createTableWallsSql)
+    await createTable(createTableFeedbacksSql)
+    await createTable(createTableCommentsSql)
 }
 
 // ==========> 新增 <==========
